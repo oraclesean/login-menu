@@ -1,0 +1,12 @@
+# The menu script reads this inventory file and uses it to generate a menu and SSH commands.
+
+# Format of the inventory file is:
+# group (for categorization) | friendly_name | description | host name | user name (defaults-$user) | login method (default=$login_method) | login_options (default=$login_options)
+
+# Sample entries:
+Development | devdb1 | Dev - (dev1, dev2) | dev.domain.com |||
+Production | prod-db1 | Prod - RAC Node1 (prod1)| prod-db01.domain.com |||
+Production | prod-db2 | Prod - RAC Node2 (prod2)| prod-db02.domain.com |||
+Test | test-db01 | Test RAC Node1 (dbt01)| test-db01.domain.com |||
+Test | test-db02 | Test RAC Node2 (dbt02)| test-db02.domain.com |||
+Production | prod01 | Prod database host (database1, database2)  | prod-db99.domain.com |||
