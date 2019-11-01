@@ -1,3 +1,10 @@
+#!/usr/bin/env bash
+
+# Format of the inventory file is:
+# host group | friendly_name | description | host name | username (default=whoami) | method (default=$login_method) | login_options (default=$login_options)
+# Corresponding script variables are:
+# hostg      | fname         | descr       | hname     | uname                     | lmeth                          | lopts
+
 version() {
 echo $PROGRAM $VERSION
 }
@@ -6,10 +13,10 @@ usage()
 {
   version
   echo "Usage: "
-  echo "$PROGRAM [-i filename] [-c client_name] [-m [ssh|rdp]] [-u username] [-w num] "
+  echo "$PROGRAM [-i filename] [-t title] [-m [ssh|rdp]] [-u username] [-w num] "
   echo " "
   echo "Options: "
-  echo "  -c clientname        Client name "
+  echo "  -t title             Page title"
   echo "  -i filename          Absolute/relative location of inventory file (default=./inventory.txt) "
   echo "  -m [ssh, rdp]        Default login method (default=ssh) "
   echo "  -u username          Username for login (default=whoami) "
@@ -77,11 +84,11 @@ else command[$k]="xfreerdp ${lopts[$i]} -u ${uname[$i]} ${hname[$i]}"
 show_menu() {
 # Read the server file
 # $sort is a passed command to enable/disable sorting
-IFS=$'\r\n' read -d '\|' -ra lines < <(egrep -v "^#|^$" "$inventory" | eval "${sort}" && printf '\0')
+IFS=$'\r\n' read -d '\|' -ra lines < <(egrep -v "^#|^[[:space:]]*$" "$inventory" | eval "${sort}" && printf '\0')
 
-# Is the client defined? Print a header.
-  if ! [[ -z "$client" ]]
-then print_header $client
+# Is the title defined? Print a header.
+  if ! [[ -z "$title" ]]
+then print_header "$title"
   fi
 
 # Process the file.
@@ -105,7 +112,7 @@ done
 
 # Done. Print a concluding separator:
 print_header
-printf "%-20s  X.  Exit \r\n \r\n"
+printf "%-20s   X.  Exit \r\n \r\n"
 
 echo " "
 
@@ -148,7 +155,7 @@ local choice
 # Set variables.
 PROGRAM=`basename $0`
 VERSION=1.0
-client=
+title=
 inventory="./inventory.txt"
 login_method=ssh
 sort="sort -bu"
@@ -160,18 +167,14 @@ page_width=110
 while [[ $# -gt 0 ]]
 do
 option="$1"
+shift
 
 case $option in
-    -c) client="$2"
-    shift; shift ;;
-    -i) inventory="$2"
-    shift; shift ;;
-    -m) login_method="$(echo $2 | tr '[:upper:]' '[:lower:]')"
-    shift; shift ;;
-    -u) user="$2"
-    shift; shift ;;
-    -w) page_width="$2"
-    shift; shift ;;
+    -i) inventory="$1"; shift ;;
+    -m) login_method="$(echo $1 | tr '[:upper:]' '[:lower:]')"; shift ;;
+    -t) title="$1"; shift ;;
+    -u) user="$1"; shift ;;
+    -w) page_width="$1"; shift ;;
     --nosort) sort="egrep '.$'"
               nosort="Y"
     shift ;;
