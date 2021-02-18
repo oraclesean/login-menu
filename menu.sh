@@ -49,13 +49,13 @@ j="$(($i-1))"
 k="$(($i+1))"
 
 # Trim white space for the individual array values.
-hostg[$i]="$(echo ${1} | cut -d'|' -f1 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-fname[$i]="$(echo ${1} | cut -d'|' -f2 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-descr[$i]="$(echo ${1} | cut -d'|' -f3 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-hname[$i]="$(echo ${1} | cut -d'|' -f4 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-uname[$i]="$(echo ${1} | cut -d'|' -f5 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-lmeth[$i]="$(echo ${1} | cut -d'|' -f6 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-lopts[$i]="$(echo ${1} | cut -d'|' -f7 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+hostg[$i]="$(echo "${1}" | cut -d'|' -f1 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+fname[$i]="$(echo "${1}" | cut -d'|' -f2 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+descr[$i]="$(echo "${1}" | cut -d'|' -f3 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+hname[$i]="$(echo "${1}" | cut -d'|' -f4 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+uname[$i]="$(echo "${1}" | cut -d'|' -f5 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+lmeth[$i]="$(echo "${1}" | cut -d'|' -f6 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+lopts[$i]="$(echo "${1}" | cut -d'|' -f7 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 
 # Check to see if the login user is specified:
   if [[ "${#uname[$i]}" -eq 0 ]]
